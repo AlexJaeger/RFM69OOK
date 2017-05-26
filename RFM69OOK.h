@@ -44,6 +44,18 @@
 #elif defined(__AVR_ATmega32U4__)
   #define RF69OOK_IRQ_PIN          3
   #define RF69OOK_IRQ_NUM          0
+#elif defined(CORE_TEENSY) && defined(__MK20DX128__) // Added conditional support for teensy. Change these pins as necessary.
+  #define RF69OOK_IRQ_PIN          4
+  #define RF69OOK_IRQ_NUM          0
+#elif defined(CORE_TEENSY) && defined(__MK20DX256__)
+  #define RF69OOK_IRQ_PIN          4
+  #define RF69OOK_IRQ_NUM          0
+#elif defined(CORE_TEENSY) && defined(__MK66FX1M0__)
+  #define RF69OOK_IRQ_PIN          4
+  #define RF69OOK_IRQ_NUM          0
+#elif defined(ARDUINO_SAMD_ZERO)                     // Added conditional support for M0 chipsets. Change these pins as necessary.
+  #define RF69OOK_IRQ_PIN          6
+  #define RF69OOK_IRQ_NUM          0
 #endif
 
 #define RF69OOK_MODE_SLEEP       0 // XTAL OFF
@@ -95,11 +107,11 @@ class RFM69OOK {
     bool poll();
     void send(bool signal);
     void attachUserInterrupt(void (*function)());
-	void setBandwidth(uint8_t bw);
+  void setBandwidth(uint8_t bw);
     void setBitrate(uint32_t bitrate);
-	void setRSSIThreshold(int8_t rssi);
-	void setFixedThreshold(uint8_t threshold);
-	void setSensitivityBoost(uint8_t value);
+  void setRSSIThreshold(int8_t rssi);
+  void setFixedThreshold(uint8_t threshold);
+  void setSensitivityBoost(uint8_t value);
 
     void select();
     void unselect();
@@ -114,8 +126,6 @@ class RFM69OOK {
     byte _interruptNum;
     byte _powerLevel;
     bool _isRFM69HW;
-    byte _SPCR;
-    byte _SPSR;
 
     void setMode(byte mode);
     void setHighPowerRegs(bool onOff);

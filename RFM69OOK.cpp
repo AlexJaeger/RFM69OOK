@@ -251,9 +251,6 @@ void RFM69OOK::writeReg(byte addr, byte value)
 // Select the transceiver
 void RFM69OOK::select() {
   noInterrupts();
-  // save current SPI settings
-  _SPCR = SPCR;
-  _SPSR = SPSR;
   // set RFM69 SPI settings
   SPI.setDataMode(SPI_MODE0);
   SPI.setBitOrder(MSBFIRST);
@@ -264,9 +261,6 @@ void RFM69OOK::select() {
 /// UNselect the transceiver chip
 void RFM69OOK::unselect() {
   digitalWrite(_slaveSelectPin, HIGH);
-  // restore SPI settings to what they were before talking to RFM69
-  SPCR = _SPCR;
-  SPSR = _SPSR;
   interrupts();
 }
 
